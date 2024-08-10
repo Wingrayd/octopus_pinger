@@ -9,6 +9,8 @@ At the moment, the following has been done:
 2) A client base that connects to the server, receives a list of processed addresses from it, pings them and returns data on failures to the server.
 3) Added constructs to eliminate errors and the ability to reconnect from both sides of the connection.
 4) Added multithreading to the server to connect multiple clients.
+
+At this stage: for use in line 20 of the server, specify the list of addresses you need. In line 9 of the client, specify the address on which the server will be launched. The output of "silent" devices occurs in the console.
    
 In the nearest plans:
 1) Web interface for displaying states.
@@ -29,6 +31,8 @@ ________________________________________________________________________________
 2) Клиентская основа, которая подключается к серверу, получает от него список обрабатываемых адресов, пропинговывает их и возвращает на сервер данные о неудачах. 
 3) Добавлены конструкции для исключения ошибок и возможности реконнекта с обеих сторон подключений.
 4) Добавлена многопоточность на сервер, для подключения нескольких клиентов.
+
+На данном этапе: для использования в 20 строке сервера укажите список нужных вам адресов. В 9 строке клиента укажите адрес на котором будет запущен сервер. Вывод "молчащих" устройств происходит в консоль.
 
 В ближайших планах:
 1) Веб-интерфейс для отображения состояний.
