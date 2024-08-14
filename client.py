@@ -12,24 +12,37 @@ def server_connect():
         time.sleep(10)
         server_connect()
     else: 
-        json_addrs = client_socket.recv(1024)
-        addrs = json.loads(json_addrs.decode())
+        data = client_socket.recv(1024)
+        addrs = json.loads(data.decode())
+        silent = []
         while True:
-            pinging(addrs, client_socket)
-    
-def pinging(addrs, client_socket):
+            pinging(addrs, client_socket, silent)
+
+def pinging(addrs, client_socket, silent):
     for addr in addrs:
         result = ping(addr, count=1, timeout=1)
         if not result.success():
-            result = ping(addr, count=3 , interval=0.5, timeout=2)
-            if not result.success():
-                data = bytes(f'{addr} is down', 'utf-8')
-                try:
-                    client_socket.send(data)
-                except (socket.error) as e:
-                    print(e)
-                    server_connect()
+            if addr not in silent:
+                silent.append(addr)
+                sending(client_socket, silent) 
         else :
+            if addr in silent:
+                silent.remove(addr)
+                sending(client_socket, silent)
             print(addr,' ok')
+    check = json.dumps(47)
+    try:
+        client_socket.send(check.encode())
+    except (socket.error) as err:
+            print(err)
+            server_connect()
+
+def sending(client_socket, silent):
+    json_silent = json.dumps(silent)
+    try:
+        client_socket.send(json_silent.encode())
+    except (socket.error) as err:
+            print(err)
+            server_connect()
 
 server_connect()
