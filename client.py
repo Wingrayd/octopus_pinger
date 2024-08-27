@@ -20,17 +20,19 @@ def server_connect():
 
 def pinging(addrs, client_socket, silent):
     for addr in addrs:
-        result = ping(addr, count=1, timeout=1)
+        result = ping(addr[0], count=1, timeout=1)
+        
         if not result.success():
             if addr not in silent:
                 silent.append(addr)
                 sending(client_socket, silent) 
+            #print(addr,' down')
         else :
             if addr in silent:
                 silent.remove(addr)
                 sending(client_socket, silent)
-            print(addr,' ok')
-    check = json.dumps(47)
+            #print(addr,' ok')
+    check = json.dumps(True)
     try:
         client_socket.send(check.encode())
     except (socket.error) as err:
